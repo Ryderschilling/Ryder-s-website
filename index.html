@@ -898,9 +898,58 @@
       .footer-links { gap: 16px; flex-wrap: wrap; justify-content: center; }
     }
 
+
+    /* ── CUSTOM CURSOR ──────────────────────────────────────── */
+    body, a, button, .work-item, .service-card, .ps-cta { cursor: none !important; }
+
+    .cursor-ring {
+      position: fixed;
+      width: 28px; height: 28px;
+      background: #fff;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      left: -100px; top: -100px;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+      transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                  height 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: left, top;
+    }
+
+    .cursor-dot {
+      position: fixed;
+      width: 4px; height: 4px;
+      background: #fff;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10001;
+      left: -100px; top: -100px;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+      will-change: left, top;
+    }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+    .rd1 { transition-delay: 0.1s; }
+    .rd2 { transition-delay: 0.2s; }
+    .rd3 { transition-delay: 0.3s; }
+    .rd4 { transition-delay: 0.4s; }
+
   </style>
 </head>
 <body>
+
+<!-- ── CURSOR ───────────────────────────────────────────────── -->
+<div class="cursor-ring"></div>
+<div class="cursor-dot"></div>
 
 <!-- ── LOADER (GSP-exact mechanism) ────────────────────────── -->
 <div id="pre-wrapper">
@@ -948,13 +997,13 @@
 
 <!-- ── STATEMENT ────────────────────────────────────────────── -->
 <section class="statement-section" id="about">
-  <p class="section-eyebrow">Ryder Schilling</p>
-  <h2 class="statement-text">
+  <p class="section-eyebrow reveal">Ryder Schilling</p>
+  <h2 class="statement-text reveal rd1">
     Custom websites.<br>
     AI-powered platforms.<br>
     <em>Built to last.</em>
   </h2>
-  <div class="statement-lower">
+  <div class="statement-lower reveal rd2">
     <p class="statement-body">
       <strong>I build serious digital products.</strong> Custom websites, client platforms,
       and full AI automation systems — designed for businesses that want to move faster,
@@ -998,7 +1047,6 @@
           <h3 class="pi-name">NLH Media</h3>
           <div class="pi-details">
             <div class="pi-row"><span class="pi-key">Type</span><span class="pi-val">Sports Videography Brand</span></div>
-            <div class="pi-row"><span class="pi-key">Stack</span><span class="pi-val">HTML · CSS · JS</span></div>
             <div class="pi-row"><span class="pi-key">Region</span><span class="pi-val">Florida Panhandle</span></div>
             <div class="pi-row"><span class="pi-key">Status</span><span class="pi-val">Live</span></div>
           </div>
@@ -1010,7 +1058,6 @@
           <h3 class="pi-name">Elias Collective</h3>
           <div class="pi-details">
             <div class="pi-row"><span class="pi-key">Type</span><span class="pi-val">Private Equity RE Firm</span></div>
-            <div class="pi-row"><span class="pi-key">Stack</span><span class="pi-val">Full Stack · Next.js</span></div>
             <div class="pi-row"><span class="pi-key">Region</span><span class="pi-val">Southeast & Midwest USA</span></div>
             <div class="pi-row"><span class="pi-key">Status</span><span class="pi-val">Live</span></div>
           </div>
@@ -1022,7 +1069,6 @@
           <h3 class="pi-name">Source A Trade</h3>
           <div class="pi-details">
             <div class="pi-row"><span class="pi-key">Type</span><span class="pi-val">Local Trade Directory</span></div>
-            <div class="pi-row"><span class="pi-key">Stack</span><span class="pi-val">Full Stack · Directory Platform</span></div>
             <div class="pi-row"><span class="pi-key">Region</span><span class="pi-val">30A · NW Florida</span></div>
             <div class="pi-row"><span class="pi-key">Status</span><span class="pi-val">Live</span></div>
           </div>
@@ -1034,7 +1080,6 @@
           <h3 class="pi-name">Found<br>Community</h3>
           <div class="pi-details">
             <div class="pi-row"><span class="pi-key">Type</span><span class="pi-val">Community Platform</span></div>
-            <div class="pi-row"><span class="pi-key">Stack</span><span class="pi-val">Full Stack · Web App</span></div>
             <div class="pi-row"><span class="pi-key">Focus</span><span class="pi-val">Christian Connection</span></div>
             <div class="pi-row"><span class="pi-key">Status</span><span class="pi-val">Live</span></div>
           </div>
@@ -1134,12 +1179,12 @@
 <!-- ── SERVICES ─────────────────────────────────────────────── -->
 <section class="services-section" id="services">
   <div class="services-head">
-    <h2 class="services-title">Work<br>With Me</h2>
-    <span class="services-label">Services</span>
+    <h2 class="services-title reveal">Work<br>With Me</h2>
+    <span class="services-label reveal rd1">Services</span>
   </div>
   <div class="services-grid">
 
-    <a class="service-card" href="#contact">
+    <a class="service-card reveal rd1" href="#contact">
       <p class="service-num">01</p>
       <h3 class="service-name">Website & Platform Build</h3>
       <p class="service-desc">
@@ -1150,7 +1195,7 @@
       <span class="service-cta">Start a Project →</span>
     </a>
 
-    <a class="service-card" href="#contact">
+    <a class="service-card reveal rd2" href="#contact">
       <p class="service-num">02</p>
       <h3 class="service-name">AI Automation Build</h3>
       <p class="service-desc">
@@ -1161,7 +1206,7 @@
       <span class="service-cta">Start a Project →</span>
     </a>
 
-    <a class="service-card" href="#contact">
+    <a class="service-card reveal rd3" href="#contact">
       <p class="service-num">03</p>
       <h3 class="service-name">AI Coaching</h3>
       <p class="service-desc">
@@ -1178,8 +1223,8 @@
 
 <!-- ── CONTACT ───────────────────────────────────────────────── -->
 <section class="contact-section" id="contact">
-  <p class="contact-eyebrow">Get In Touch</p>
-  <h2 class="contact-title">Say<br>Hello.</h2>
+  <p class="contact-eyebrow reveal">Get In Touch</p>
+  <h2 class="contact-title reveal rd1">Say<br>Hello.</h2>
   <div style="display:flex; flex-direction:column; align-items:center; gap:14px;">
     <a href="mailto:ryderschilling@gmail.com" class="contact-link">ryderschilling@gmail.com</a>
     <a href="tel:+13094158793" class="contact-link">(309) 415-8793</a>
@@ -1283,6 +1328,49 @@
     // 8. Remove loader from DOM entirely
     tl.call(() => { wrapper.remove(); });
   })();
+
+  // ── Custom cursor ────────────────────────────────────────────
+  const cRing = document.querySelector('.cursor-ring');
+  const cDot  = document.querySelector('.cursor-dot');
+  let tx = -200, ty = -200, cx = -200, cy = -200;
+
+  document.addEventListener('mousemove', e => {
+    tx = e.clientX; ty = e.clientY;
+    cDot.style.left = tx + 'px';
+    cDot.style.top  = ty + 'px';
+  });
+
+  (function animCursor() {
+    cx += (tx - cx) * 0.1;
+    cy += (ty - cy) * 0.1;
+    cRing.style.left = cx + 'px';
+    cRing.style.top  = cy + 'px';
+    requestAnimationFrame(animCursor);
+  })();
+
+  document.querySelectorAll('a, button, .work-item, .service-card, .portfolio-slide').forEach(el => {
+    el.addEventListener('mouseenter', () => { cRing.style.width = '72px'; cRing.style.height = '72px'; });
+    el.addEventListener('mouseleave', () => { cRing.style.width = '28px'; cRing.style.height = '28px'; });
+  });
+
+  // ── Scroll reveal ─────────────────────────────────────────────
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in-view'); revealObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  // ── Hero photo parallax ───────────────────────────────────────
+  const heroPhoto = document.querySelector('.hero-photo');
+  const heroEl    = document.getElementById('hero');
+  window.addEventListener('scroll', () => {
+    if (!heroPhoto) return;
+    const y = window.scrollY;
+    if (y < window.innerHeight * 1.3) {
+      heroPhoto.style.transform = `translateX(-50%) translateY(${y * 0.1}px)`;
+    }
+  }, { passive: true });
 
   // ── iframe scale — fit 1440px desktop render into card width ──
   function scaleIframes() {
