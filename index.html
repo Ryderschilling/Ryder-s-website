@@ -14,7 +14,15 @@
 
     /* ── RESET ─────────────────────────────────────────────── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    body { overflow-x: clip; width: 100%; }
+
+    /* ── PAGE WRAP — absolute clip on all content ───────────── */
+    #page-wrap {
+      overflow-x: clip;
+      width: 100%;
+      position: relative;
+    }
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: #f0ede8; }
     ::-webkit-scrollbar-thumb { background: #ccc; }
@@ -45,6 +53,7 @@
     #pre-wrapper {
       position: fixed;
       inset: 0;
+      overflow: hidden;
       z-index: 9999;
       pointer-events: none;
     }
@@ -868,34 +877,249 @@
     .footer-links a:hover { color: var(--light-text); }
 
     /* ── RESPONSIVE ─────────────────────────────────────────── */
-    @media (max-width: 900px) {
-      nav { padding: 20px 24px; }
-      .nav-links { display: none; }
+    @media (max-width: 768px) {
 
-      .hero-first { font-size: clamp(44px, 12vw, 80px); left: 20px; }
-      .hero-last  { font-size: clamp(48px, 14vw, 90px); }
-      .hero-photo { height: 85%; }
+      /* Cursor — off on touch */
+      .cursor-ring, .cursor-dot { display: none; }
+      body, a, button, .work-item, .service-card, .ps-cta { cursor: auto !important; }
+
+      /* Loader — contain text, scale down */
+      #pre-wrapper { overflow: hidden; }
+      .pre-container { padding: 0 24px; width: 100%; }
+      .pre-loading { width: 100%; align-items: stretch; }
+      .pre-gsp-text {
+        font-size: clamp(10px, 3.2vw, 14px);
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+        justify-content: center;
+      }
+      .loader-full { font-size: 8px; letter-spacing: 0.22em; text-align: center; }
+
+      /* Nav — floating pill */
+      nav {
+        left: 50%;
+        right: auto;
+        top: 14px;
+        transform: translateX(-50%);
+        width: auto;
+        white-space: nowrap;
+        padding: 7px 8px;
+        border-radius: 100px;
+        background: rgba(22, 22, 22, 0.95) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+        gap: 2px;
+      }
+      .nav-logo { display: none; }
+      .nav-links {
+        display: flex;
+        gap: 0;
+      }
+      .nav-links a {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: rgba(255,255,255,0.6);
+        padding: 7px 13px;
+        border-radius: 100px;
+      }
+      .nav-links a:hover {
+        color: #fff;
+        background: rgba(255,255,255,0.08);
+      }
+      .nav-cta {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: rgba(255,255,255,0.6);
+        padding: 7px 13px;
+        border-radius: 100px;
+      }
+      .nav-cta:hover { color: #fff; }
+
+      /* Hero — hard stop */
+      .hero {
+        overflow: hidden;
+        height: 78vh;
+        min-height: 480px;
+      }
+      .hero-first {
+        font-size: 13vw;
+        left: 16px;
+        top: 20%;
+        white-space: nowrap;
+        animation: fadeIn 1.2s ease 4.3s both;
+      }
+      .hero-last {
+        font-size: 13vw;
+        padding-right: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        top: 68%;
+        animation: fadeIn 1.2s ease 4.5s both;
+      }
+      .hero-photo {
+        height: 90%;
+        bottom: 0;
+        left: 58%;
+      }
       .hero-descriptor { display: none; }
+      .hero-scroll { left: 16px; bottom: 18px; }
 
-      .statement-section { padding: 80px 24px 72px; }
-      .statement-lower { grid-template-columns: 1fr; gap: 40px; }
-      .statement-stats { justify-content: flex-start; }
+      /* Statement */
+      .statement-section { padding: 60px 24px 52px; }
+      .statement-text { font-size: clamp(32px, 8.5vw, 46px); }
+      .statement-lower { grid-template-columns: 1fr; gap: 32px; padding-top: 32px; }
+      .statement-stats { justify-content: flex-start; gap: 28px; }
+      .s-stat-num { font-size: 36px; }
 
-      .work-section { padding: 0 24px; }
-      .work-head { padding-top: 64px; flex-direction: column; align-items: flex-start; gap: 18px; }
-      .work-item { grid-template-columns: 60px 1fr; gap: 24px; }
-      .work-right { display: none; }
-      .work-title { font-size: clamp(24px, 7vw, 40px); }
+      /* Portfolio — native snap scroll swipe on mobile */
+      .portfolio-outer {
+        height: auto;
+        background: var(--light-bg);
+      }
+      .portfolio-sticky {
+        position: relative !important;
+        height: auto !important;
+        overflow: visible;
+        display: block;
+      }
+      .portfolio-top {
+        display: flex;
+        padding: 20px 20px 16px;
+      }
+      .portfolio-eyebrow {
+        font-size: 13px;
+        letter-spacing: 0.22em;
+      }
+      .portfolio-content { display: block !important; }
+      .portfolio-info-col { display: none !important; }
 
-      .services-section { padding: 80px 24px; }
+      /* Snap container — height locked to iframe content + label */
+      .portfolio-visual-col {
+        display: flex;
+        width: 100%;
+        height: calc(76.4vw + 110px);
+        overflow-x: scroll;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .portfolio-visual-col::-webkit-scrollbar { display: none; }
+
+      .portfolio-track {
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+        gap: 0;
+        height: 100%;
+        flex-shrink: 0;
+      }
+      .portfolio-slide {
+        width: 100vw !important;
+        height: 100% !important;
+        max-height: none !important;
+        border-radius: 0 !important;
+        overflow: hidden;
+        flex-shrink: 0;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+      }
+      .ps-iframe-wrap { display: block; }
+      .ps-name { font-size: clamp(20px, 5.5vw, 30px); }
+      /* Label + View button row */
+      .portfolio-slide .ps-bottom {
+        position: absolute;
+        top: calc(76.4vw + 14px);
+        left: 22px;
+        right: 22px;
+        bottom: auto;
+        z-index: 2;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .ps-view-link {
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.75);
+        text-decoration: none;
+        border: 1px solid rgba(255,255,255,0.25);
+        padding: 9px 14px;
+        border-radius: 100px;
+        margin-bottom: 2px;
+        transition: color 0.2s, border-color 0.2s;
+      }
+      .ps-view-link:hover {
+        color: #fff;
+        border-color: rgba(255,255,255,0.6);
+      }
+      /* CTA card — match the dark style */
+      .portfolio-slide.ps-cta {
+        background: #0c0c0c;
+        border: none;
+      }
+      .ps-cta-text { color: #e8e3da; }
+      .ps-cta-sub  { color: rgba(232,227,218,0.5); }
+      .portfolio-bar-wrap { display: none; }
+      .portfolio-counter  { display: none; }
+
+      /* Dots below cards */
+      .m-snap-footer {
+        display: flex;
+        justify-content: center;
+        padding: 20px 0 28px;
+      }
+      /* Gradient fade into next section */
+      .portfolio-outer::after {
+        content: '';
+        display: block;
+        height: 56px;
+        background: linear-gradient(to bottom, var(--light-bg), #0c0c0c);
+      }
+      .m-snap-dots { display: flex; gap: 8px; align-items: center; }
+      .m-snap-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: var(--light-border);
+        transition: background 0.3s, transform 0.3s;
+      }
+      .m-snap-dot.m-active {
+        background: var(--light-text);
+        transform: scale(1.4);
+      }
+
+      /* Services */
+      .services-section { padding: 60px 24px; }
+      .services-head { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 44px; }
+      .services-title { font-size: clamp(36px, 9.5vw, 52px); }
       .services-grid { grid-template-columns: 1fr; }
-      .services-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .service-card { padding: 36px 24px 44px; }
+      .service-name { font-size: 19px; }
 
-      .contact-section { padding: 100px 24px; }
-      .contact-title { font-size: clamp(52px, 13vw, 100px); }
+      /* Contact */
+      .contact-section { padding: 80px 24px; }
+      .contact-title { font-size: clamp(52px, 13vw, 80px); }
+      .contact-socials { gap: 10px; flex-wrap: wrap; justify-content: center; }
 
-      footer { flex-direction: column; gap: 20px; padding: 28px 24px; text-align: center; }
-      .footer-links { gap: 16px; flex-wrap: wrap; justify-content: center; }
+      /* Footer */
+      footer { flex-direction: column; gap: 16px; padding: 28px 24px; text-align: center; }
+      .footer-links { gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+      /* Reveal — skip animation on mobile */
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
     }
 
 
@@ -968,6 +1192,9 @@
   </div>
 </div>
 
+<!-- ── PAGE WRAP (clips all content to viewport width) ─────── -->
+<div id="page-wrap">
+
 <!-- ── NAV ─────────────────────────────────────────────────── -->
 <nav id="nav">
   <a href="#" class="nav-logo">RS</a>
@@ -1032,7 +1259,7 @@
 
     <!-- Header -->
     <div class="portfolio-top">
-      <span class="portfolio-eyebrow">Selected Work</span>
+      <span class="portfolio-eyebrow">Portfolio</span>
       <span class="portfolio-counter"><span id="p-num">01</span> — 04</span>
     </div>
 
@@ -1103,8 +1330,8 @@
               <span class="ps-url">nlh-media.vercel.app</span>
             </div>
             <div class="ps-bottom">
-              <p class="ps-type">Sports Videography · Florida Panhandle</p>
-              <p class="ps-name">NLH<br>Media</p>
+              <div><p class="ps-type">Sports Videography · Florida Panhandle</p><p class="ps-name">NLH<br>Media</p></div>
+              <a class="ps-view-link" href="https://nlh-media.vercel.app/" target="_blank">View ↗</a>
             </div>
           </div>
 
@@ -1119,8 +1346,8 @@
               <span class="ps-url">eliascollective.com</span>
             </div>
             <div class="ps-bottom">
-              <p class="ps-type">Private Equity RE · Southeast USA</p>
-              <p class="ps-name">Elias<br>Collective</p>
+              <div><p class="ps-type">Private Equity RE · Southeast USA</p><p class="ps-name">Elias<br>Collective</p></div>
+              <a class="ps-view-link" href="https://eliascollective.com/" target="_blank">View ↗</a>
             </div>
           </div>
 
@@ -1135,8 +1362,8 @@
               <span class="ps-url">sourceatrade.com</span>
             </div>
             <div class="ps-bottom">
-              <p class="ps-type">Local Trade Directory · 30A, NW Florida</p>
-              <p class="ps-name">Source<br>A Trade</p>
+              <div><p class="ps-type">Local Trade Directory · 30A, NW Florida</p><p class="ps-name">Source<br>A Trade</p></div>
+              <a class="ps-view-link" href="https://sourceatrade.com/" target="_blank">View ↗</a>
             </div>
           </div>
 
@@ -1151,8 +1378,8 @@
               <span class="ps-url">found.community</span>
             </div>
             <div class="ps-bottom">
-              <p class="ps-type">Community Platform · Christian Connection</p>
-              <p class="ps-name">Found<br>Community</p>
+              <div><p class="ps-type">Community Platform · Christian Connection</p><p class="ps-name">Found<br>Community</p></div>
+              <a class="ps-view-link" href="https://found.community/" target="_blank">View ↗</a>
             </div>
           </div>
 
@@ -1247,6 +1474,8 @@
   </ul>
 </footer>
 
+</div><!-- end #page-wrap -->
+
 <!-- ── JS ───────────────────────────────────────────────────── -->
 <script>
   const nav  = document.getElementById('nav');
@@ -1259,73 +1488,24 @@
     const letters  = wrapper.querySelectorAll('.pre-letter');
     const expands  = wrapper.querySelectorAll('.pre-expand');
     const innerEls = wrapper.querySelectorAll('.pre-expand .pre-el');
-    // Pre-measure each expand block at natural width, then reset to 0
+
     expands.forEach(el => {
       el.style.width = 'auto';
       el.dataset.fw  = el.scrollWidth + 'px';
       el.style.width = '0px';
     });
 
-    // Speed multiplier (GSP uses ~1; 0.9 is slightly snappier)
     const sp = 0.9;
     const tl = gsap.timeline({ delay: 0.4 });
 
-    // 1. R, S, P slide up from below
-    tl.to(letters, {
-      y: 0, opacity: 1,
-      duration: 0.6 * sp,
-      ease: 'power3.out',
-      stagger: { amount: 0.3 * sp, from: 'start' }
-    });
-
-    // 2. Expand containers open (width 0 → measured full width)
-    tl.to(expands, {
-      width: (i, el) => el.dataset.fw,
-      duration: 1.0 * sp,
-      ease: 'power2.inOut',
-      force3D: true,
-      autoRound: false
-    }, '<70%');
-
-    // 3. Add spacing between words (first two expands only)
-    tl.to([expands[0], expands[1]], {
-      marginRight: '0.45em',
-      duration: 0.5 * sp,
-      ease: 'power2.inOut'
-    }, '<30%');
-
-    // 4. Individual letters inside expand fade in with stagger
-    tl.to(innerEls, {
-      opacity: 1,
-      duration: 0.6 * sp,
-      ease: 'linear',
-      stagger: { amount: 0.45 * sp, from: 'start' }
-    }, '<10%');
-
-    // 5. Everything fades out
-    tl.to([...letters, ...innerEls], {
-      opacity: 0,
-      duration: 0.4 * sp,
-      ease: 'power2.out',
-      stagger: { amount: 0.15 * sp, from: 'start' }
-    }, '>20%');
-
-    // 6. Unlock scroll
+    tl.to(letters, { y: 0, opacity: 1, duration: 0.6 * sp, ease: 'power3.out', stagger: { amount: 0.3 * sp, from: 'start' } });
+    tl.to(expands, { width: (i, el) => el.dataset.fw, duration: 1.0 * sp, ease: 'power2.inOut', force3D: true, autoRound: false }, '<70%');
+    tl.to([expands[0], expands[1]], { marginRight: '0.45em', duration: 0.5 * sp, ease: 'power2.inOut' }, '<30%');
+    tl.to(innerEls, { opacity: 1, duration: 0.6 * sp, ease: 'linear', stagger: { amount: 0.45 * sp, from: 'start' } }, '<10%');
+    tl.to([...letters, ...innerEls], { opacity: 0, duration: 0.4 * sp, ease: 'power2.out', stagger: { amount: 0.15 * sp, from: 'start' } }, '>20%');
     tl.call(() => { document.body.style.overflowY = 'auto'; });
-
-    // 7. Two panels split — left panel exits left, right panel exits right
-    tl.to(panels[0], {
-      clipPath: 'inset(0% 100% 0% 0%)',
-      duration: 1.2 * sp,
-      ease: 'power4.inOut'
-    }, '>');
-    tl.to(panels[1], {
-      clipPath: 'inset(0% 0% 0% 100%)',
-      duration: 1.2 * sp,
-      ease: 'power4.inOut'
-    }, '<');
-
-    // 8. Remove loader from DOM entirely
+    tl.to(panels[0], { clipPath: 'inset(0% 100% 0% 0%)', duration: 1.2 * sp, ease: 'power4.inOut' }, '>');
+    tl.to(panels[1], { clipPath: 'inset(0% 0% 0% 100%)', duration: 1.2 * sp, ease: 'power4.inOut' }, '<');
     tl.call(() => { wrapper.remove(); });
   })();
 
@@ -1363,7 +1543,6 @@
 
   // ── Hero photo parallax ───────────────────────────────────────
   const heroPhoto = document.querySelector('.hero-photo');
-  const heroEl    = document.getElementById('hero');
   window.addEventListener('scroll', () => {
     if (!heroPhoto) return;
     const y = window.scrollY;
@@ -1384,8 +1563,9 @@
   scaleIframes();
   window.addEventListener('resize', scaleIframes, { passive: true });
 
-  // ── Portfolio scroll-lock ────────────────────────────────
+  // ── Portfolio — desktop scroll-lock ─────────────────────
   (function initPortfolio() {
+    if (window.innerWidth <= 768) return; // mobile handled separately below
     const outer  = document.querySelector('.portfolio-outer');
     const track  = document.getElementById('p-track');
     const bar    = document.getElementById('p-bar');
@@ -1393,26 +1573,16 @@
     const infos  = document.querySelectorAll('.portfolio-info');
     const N      = infos.length;
     if (!outer || !track) return;
-
     let lastIdx = 0;
-
     function update() {
-      const rect      = outer.getBoundingClientRect();
+      const rect       = outer.getBoundingClientRect();
       const scrollable = outer.offsetHeight - window.innerHeight;
-      const progress  = Math.max(0, Math.min(1, -rect.top / scrollable));
-
-      // Slide track horizontally — use all slides, not just info panels
-      const allSlides = track.querySelectorAll('.portfolio-slide');
-      const slideW    = allSlides[0].offsetWidth;
-      const gap       = 24;
-      const maxX      = (allSlides.length - 1) * (slideW + gap);
-      const translateX = progress * maxX;
-      track.style.transform = `translateX(${-translateX}px)`;
-
-      // Progress bar
+      const progress   = Math.max(0, Math.min(1, -rect.top / scrollable));
+      const allSlides  = track.querySelectorAll('.portfolio-slide');
+      const slideW     = allSlides[0].offsetWidth;
+      const maxX       = (allSlides.length - 1) * (slideW + 24);
+      track.style.transform = `translateX(${-progress * maxX}px)`;
       bar.style.width = `${progress * 100}%`;
-
-      // Active project — switch when next card is ~halfway into view
       const idx = Math.min(N - 1, Math.floor(progress * N + 0.45));
       if (idx !== lastIdx) {
         lastIdx = idx;
@@ -1420,13 +1590,42 @@
         infos.forEach((el, i) => el.classList.toggle('p-active', i === idx));
       }
     }
-
     window.addEventListener('scroll', update, { passive: true });
     update();
   })();
 
+  // ── Portfolio — mobile native snap scroll ───────────────
+  (function initMobilePortfolio() {
+    if (window.innerWidth > 768) return;
+    const outer     = document.querySelector('.portfolio-outer');
+    const visualCol = document.querySelector('.portfolio-visual-col');
+    if (!outer || !visualCol) return;
+
+    const slides = visualCol.querySelectorAll('.portfolio-slide');
+    const N      = slides.length;
+
+    // Inject dots below the snap container
+    const footer = document.createElement('div');
+    footer.className = 'm-snap-footer';
+    footer.innerHTML = '<div class="m-snap-dots">'
+      + Array.from({ length: N - 1 }, (_, i) =>
+          `<span class="m-snap-dot${i === 0 ? ' m-active' : ''}"></span>`
+        ).join('')
+      + '</div>';
+    outer.appendChild(footer);
+
+    const dots = Array.from(footer.querySelectorAll('.m-snap-dot'));
+
+    // Update active dot on scroll
+    visualCol.addEventListener('scroll', () => {
+      const idx = Math.round(visualCol.scrollLeft / visualCol.offsetWidth);
+      dots.forEach((d, i) => d.classList.toggle('m-active', i === Math.min(idx, N - 2)));
+    }, { passive: true });
+  })();
+
   // ── Nav on scroll ────────────────────────────────────────
   window.addEventListener('scroll', () => {
+    if (window.innerWidth <= 768) return; // pill nav on mobile — don't override
     const heroBottom = hero.getBoundingClientRect().bottom;
     const scrolled   = window.scrollY > 60;
     const pastHero   = heroBottom <= 0;
