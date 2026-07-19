@@ -936,6 +936,144 @@
 
     .service-card:hover .service-cta { color: var(--accent); }
 
+    /* ── TESTIMONIALS ───────────────────────────────────────── */
+    .testimonials-section {
+      background: var(--dark-bg);
+      padding: 120px 80px 140px;
+      border-top: 1px solid var(--dark-border);
+    }
+
+    .testimonials-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 72px;
+    }
+
+    .testimonials-title {
+      font-size: clamp(44px, 6.5vw, 88px);
+      font-weight: 900;
+      letter-spacing: -0.045em;
+      line-height: 0.9;
+      color: var(--dark-text);
+    }
+
+    .testimonials-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--dark-muted);
+    }
+
+    /* Grid — auto-fits as more testimonial / video cards get added */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 420px));
+      gap: 24px;
+      justify-content: center;
+    }
+
+    .t-card {
+      background: #101010;
+      border: 1px solid var(--dark-border);
+      border-radius: 22px;
+      padding: 34px 30px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* iMessage-style thread (received bubbles) */
+    .t-thread {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 30px;
+    }
+
+    .t-bubble {
+      max-width: 88%;
+      background: #2c2c2e;
+      color: #f5f5f7;
+      font-size: 15px;
+      line-height: 1.4;
+      padding: 11px 17px;
+      border-radius: 20px;
+      border-bottom-left-radius: 6px;
+    }
+
+    .t-bubble:last-child {
+      position: relative;
+      border-bottom-left-radius: 20px;
+    }
+
+    /* Tail on the final bubble */
+    .t-bubble:last-child::before {
+      content: '';
+      position: absolute;
+      left: -6px;
+      bottom: 0;
+      width: 14px;
+      height: 14px;
+      background: #2c2c2e;
+      border-bottom-right-radius: 14px;
+      clip-path: polygon(0 100%, 100% 100%, 100% 0);
+    }
+
+    .t-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-top: 1px solid var(--dark-border);
+      padding-top: 22px;
+      margin-top: auto;
+    }
+
+    .t-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(196,163,90,0.1);
+      border: 1px solid rgba(196,163,90,0.25);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    .t-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--dark-text);
+    }
+
+    .t-role {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dark-muted);
+      margin-top: 3px;
+    }
+
+    .t-badge {
+      margin-left: auto;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--dark-muted);
+      border: 1px solid var(--dark-border);
+      padding: 7px 13px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
     /* ── CONTACT ────────────────────────────────────────────── */
     .contact-section {
       background: var(--light-bg);
@@ -1320,6 +1458,13 @@
       .services-grid { grid-template-columns: 1fr; }
       .service-card { padding: 36px 24px 44px; }
       .service-name { font-size: 19px; }
+
+      /* Testimonials */
+      .testimonials-section { padding: 60px 24px 70px; }
+      .testimonials-head { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 40px; }
+      .testimonials-title { font-size: clamp(36px, 9.5vw, 52px); }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .t-card { padding: 28px 22px 24px; }
 
       /* Contact */
       .contact-section { padding: 80px 24px; }
@@ -1734,6 +1879,41 @@
       </p>
       <span class="service-cta">Book a Session →</span>
     </a>
+
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ─────────────────────────────────────────── -->
+<section class="testimonials-section" id="testimonials">
+  <div class="testimonials-head">
+    <h2 class="testimonials-title reveal">Client<br>Reactions.</h2>
+  </div>
+  <div class="testimonials-grid">
+
+    <!-- Jacob H — real text after seeing his site -->
+    <div class="t-card reveal rd1">
+      <div class="t-thread">
+        <div class="t-bubble">Im obsessed</div>
+        <div class="t-bubble">Can&rsquo;t stop looking at it lol</div>
+      </div>
+      <div class="t-meta">
+        <div class="t-avatar">JH</div>
+        <div>
+          <p class="t-name">Jacob H.</p>
+          <p class="t-role">Website Client</p>
+        </div>
+        <span class="t-badge">Real Text</span>
+      </div>
+    </div>
+
+    <!--
+      TO ADD MORE TESTIMONIALS: copy a .t-card block above.
+      · Text-message style: keep .t-thread with one .t-bubble per message.
+      · Standard quote: swap .t-thread for <p class="t-bubble">"quote"</p> or ask Claude for a quote variant.
+      · Video: replace .t-thread with:
+          <video class="t-video" src="clip.mp4" controls playsinline preload="metadata" style="width:100%;border-radius:14px;margin-bottom:30px;"></video>
+      Grid auto-fits — cards center themselves at any count.
+    -->
 
   </div>
 </section>
