@@ -966,112 +966,99 @@
       color: var(--dark-muted);
     }
 
-    /* Grid — auto-fits as more testimonial / video cards get added */
-    .testimonials-grid {
+    /* Card grid — auto-fits as more client cards get added */
+    .t-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 420px));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 360px));
       gap: 24px;
       justify-content: center;
     }
 
+    /* White card, black text. Hover: brand image fades in behind the text. */
     .t-card {
-      background: #101010;
-      border: 1px solid var(--dark-border);
-      border-radius: 22px;
-      padding: 34px 30px 28px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* iMessage-style thread (received bubbles) */
-    .t-thread {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-      margin-bottom: 30px;
-    }
-
-    .t-bubble {
-      max-width: 88%;
-      background: #2c2c2e;
-      color: #f5f5f7;
-      font-size: 15px;
-      line-height: 1.4;
-      padding: 11px 17px;
-      border-radius: 20px;
-      border-bottom-left-radius: 6px;
-    }
-
-    .t-bubble:last-child {
       position: relative;
-      border-bottom-left-radius: 20px;
-    }
-
-    /* Tail on the final bubble */
-    .t-bubble:last-child::before {
-      content: '';
-      position: absolute;
-      left: -6px;
-      bottom: 0;
-      width: 14px;
-      height: 14px;
-      background: #2c2c2e;
-      border-bottom-right-radius: 14px;
-      clip-path: polygon(0 100%, 100% 100%, 100% 0);
-    }
-
-    .t-meta {
+      overflow: hidden;
+      background: #fff;
+      border-radius: 18px;
+      padding: 40px 34px 32px;
+      min-height: 340px;
       display: flex;
-      align-items: center;
-      gap: 14px;
-      border-top: 1px solid var(--dark-border);
-      padding-top: 22px;
-      margin-top: auto;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .t-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(196,163,90,0.1);
-      border: 1px solid rgba(196,163,90,0.25);
-      color: var(--accent);
+    .t-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+    }
+
+    .t-card-bg {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      flex-shrink: 0;
+      opacity: 0;
+      transform: scale(1.08);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+      pointer-events: none;
+    }
+
+    .t-card:hover .t-card-bg {
+      opacity: 0.1;
+      transform: scale(1);
+    }
+
+    .t-card-bg img {
+      width: 72%;
+      height: 72%;
+      object-fit: contain;
+    }
+
+    /* Touch devices have no hover — keep the brand image faintly visible */
+    @media (hover: none) {
+      .t-card-bg { opacity: 0.06; transform: scale(1); }
+    }
+
+    .t-quote-mark {
+      position: relative;
+      display: block;
+      font-size: 52px;
+      font-weight: 900;
+      line-height: 0.6;
+      color: #0c0c0c;
+      margin-bottom: 22px;
+    }
+
+    .t-quote {
+      position: relative;
+      font-size: 16px;
+      line-height: 1.7;
+      font-weight: 500;
+      color: #1a1a1a;
+      flex: 1;
+    }
+
+    .t-meta {
+      position: relative;
+      margin-top: 36px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding-top: 20px;
     }
 
     .t-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--dark-text);
+      font-size: 15px;
+      font-weight: 800;
+      color: #0c0c0c;
     }
 
     .t-role {
       font-size: 10px;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--dark-muted);
-      margin-top: 3px;
-    }
-
-    .t-badge {
-      margin-left: auto;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--dark-muted);
-      border: 1px solid var(--dark-border);
-      padding: 7px 13px;
-      border-radius: 100px;
-      white-space: nowrap;
+      color: #999;
+      margin-top: 4px;
     }
 
     /* ── CONTACT ────────────────────────────────────────────── */
@@ -1463,8 +1450,8 @@
       .testimonials-section { padding: 60px 24px 70px; }
       .testimonials-head { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 40px; }
       .testimonials-title { font-size: clamp(36px, 9.5vw, 52px); }
-      .testimonials-grid { grid-template-columns: 1fr; }
-      .t-card { padding: 28px 22px 24px; }
+      .t-grid { grid-template-columns: 1fr; }
+      .t-card { min-height: 280px; padding: 32px 26px 26px; }
 
       /* Contact */
       .contact-section { padding: 80px 24px; }
@@ -1887,32 +1874,29 @@
 <section class="testimonials-section" id="testimonials">
   <div class="testimonials-head">
     <h2 class="testimonials-title reveal">Client<br>Reactions.</h2>
+    <span class="testimonials-label reveal rd1">Unfiltered</span>
   </div>
-  <div class="testimonials-grid">
+  <div class="t-grid">
 
-    <!-- Jacob H — real text after seeing his site -->
+    <!-- Jacob H · Fit Flour -->
     <div class="t-card reveal rd1">
-      <div class="t-thread">
-        <div class="t-bubble">Im obsessed</div>
-        <div class="t-bubble">Can&rsquo;t stop looking at it lol</div>
+      <div class="t-card-bg">
+        <img src="https://fit-flour-faceless.vercel.app/images/FF-logo-transparent.png" alt="" aria-hidden="true">
+      </div>
+      <div class="t-quote">
+        <span class="t-quote-mark">&ldquo;</span>
+        <p>Im obsessed. Can&rsquo;t stop looking at it lol.</p>
       </div>
       <div class="t-meta">
-        <div class="t-avatar">JH</div>
-        <div>
-          <p class="t-name">Jacob H.</p>
-          <p class="t-role">Website Client</p>
-        </div>
-        <span class="t-badge">Real Text</span>
+        <p class="t-name">Jacob H.</p>
+        <p class="t-role">Fit Flour</p>
       </div>
     </div>
 
     <!--
-      TO ADD MORE TESTIMONIALS: copy a .t-card block above.
-      · Text-message style: keep .t-thread with one .t-bubble per message.
-      · Standard quote: swap .t-thread for <p class="t-bubble">"quote"</p> or ask Claude for a quote variant.
-      · Video: replace .t-thread with:
-          <video class="t-video" src="clip.mp4" controls playsinline preload="metadata" style="width:100%;border-radius:14px;margin-bottom:30px;"></video>
-      Grid auto-fits — cards center themselves at any count.
+      TO ADD A TESTIMONIAL: copy the .t-card block above —
+      swap the quote, name, company, and the .t-card-bg image (client logo or photo).
+      The grid auto-fits and centers at any count.
     -->
 
   </div>
