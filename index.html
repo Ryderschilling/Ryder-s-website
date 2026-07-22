@@ -541,7 +541,7 @@
 
     /* ── PORTFOLIO (scroll-locked) ──────────────────────────── */
     .portfolio-outer {
-      height: 600vh;
+      height: 700vh;
       background: var(--light-bg);
       border-top: 1px solid var(--light-border);
       position: relative;
@@ -1469,7 +1469,7 @@
 
     /* ── DESKTOP PORTFOLIO LOCK — always overrides mobile resets ─ */
     @media (min-width: 769px) {
-      .portfolio-outer      { height: 600vh !important; position: relative !important; }
+      .portfolio-outer      { height: 700vh !important; position: relative !important; }
       .portfolio-sticky     { position: relative !important; height: 100vh !important; overflow: hidden !important; }
       .portfolio-sticky.is-fixed  { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; height: 100vh !important; }
       .portfolio-sticky.is-bottom { position: absolute !important; bottom: 0 !important; top: auto !important; left: 0 !important; right: 0 !important; height: 100vh !important; }
@@ -1655,7 +1655,7 @@
     <!-- Header -->
     <div class="portfolio-top">
       <span class="portfolio-eyebrow">Portfolio</span>
-      <span class="portfolio-counter"><span id="p-num">01</span> — 06</span>
+      <span class="portfolio-counter"><span id="p-num">01</span> — 07</span>
     </div>
 
     <!-- Content: info left + visuals right -->
@@ -1728,6 +1728,17 @@
             <div class="pi-row"><span class="pi-key">Status</span><span class="pi-val">Live</span></div>
           </div>
           <a href="https://fitflour.shop/" target="_blank" class="pi-link">Visit Site ↗</a>
+        </div>
+
+        <div class="portfolio-info" data-i="6">
+          <p class="pi-num">07</p>
+          <h3 class="pi-name">HydroWild</h3>
+          <div class="pi-details">
+            <div class="pi-row"><span class="pi-key">Type</span><span class="pi-val">Hydration Brand</span></div>
+            <div class="pi-row"><span class="pi-key">Focus</span><span class="pi-val">Kids &amp; Teens</span></div>
+            <div class="pi-row"><span class="pi-key">Status</span><span class="pi-val">Live</span></div>
+          </div>
+          <a href="https://hydrowild.com/" target="_blank" class="pi-link">Visit Site ↗</a>
         </div>
 
       </div>
@@ -1832,7 +1843,23 @@
             </div>
           </div>
 
-          <!-- Slide 07: CTA -->
+          <!-- Slide 07: HydroWild -->
+          <div class="portfolio-slide" style="background:#09005E;">
+            <div class="ps-iframe-wrap">
+              <iframe src="https://hydrowild.com/" loading="lazy" scrolling="no" tabindex="-1" title="HydroWild"></iframe>
+            </div>
+            <div class="ps-grad"></div>
+            <div class="ps-top">
+              <span class="ps-dot"></span><span class="ps-dot"></span><span class="ps-dot"></span>
+              <span class="ps-url">hydrowild.com</span>
+            </div>
+            <div class="ps-bottom">
+              <div><p class="ps-type">Hydration Brand · Kids &amp; Teens</p><p class="ps-name">Hydro<br>Wild</p></div>
+              <a class="ps-view-link" href="https://hydrowild.com/" target="_blank">View ↗</a>
+            </div>
+          </div>
+
+          <!-- Slide 08: CTA -->
           <a class="portfolio-slide ps-cta" href="#contact">
             <div>
               <p class="ps-cta-text">Your Project<br>Is Next.</p>
@@ -1917,6 +1944,21 @@
       <div class="t-meta">
         <p class="t-name">Jacob H.</p>
         <p class="t-role">Fit Flour</p>
+      </div>
+    </div>
+
+    <!-- CJ Britton · HydroWild -->
+    <div class="t-card reveal rd2">
+      <div class="t-card-bg">
+        <img src="hydrowild-logo.svg" alt="" aria-hidden="true">
+      </div>
+      <div class="t-quote">
+        <span class="t-quote-mark">&ldquo;</span>
+        <p>Merry Christmas to me!</p>
+      </div>
+      <div class="t-meta">
+        <p class="t-name">CJ Britton</p>
+        <p class="t-role">HydroWild</p>
       </div>
     </div>
 
